@@ -1,4 +1,6 @@
 # KobeGE
 Kobe Game Engine Written in C++
 
-Inspired by sparky engine written by TheCherno
+Done from scrach by an amateur (Me)
+
+It uses GLFW and GLEW
