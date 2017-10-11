@@ -146,7 +146,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\RenderManager.cpp" />
+    <ClCompile Include="src\Input\InputManager.cpp" />
+    <ClCompile Include="src\ErrorChecking\PrintError.cpp" />
+    <ClCompile Include="src\System\InitManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Window\WindowManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Renderer\RenderManager.h" />
+    <ClInclude Include="src\Input\InputManager.h" />
+    <ClInclude Include="src\ErrorChecking\PrintError.h" />
+    <ClInclude Include="src\System\InitManager.h" />
+    <ClInclude Include="src\Window\WindowManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
