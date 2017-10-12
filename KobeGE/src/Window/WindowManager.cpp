@@ -22,6 +22,7 @@ int WindowManager::create(int width, int height, const char *title) {
 		return -1;
 	}
 	glfwMakeContextCurrent(_window);
+	glViewport(0, 0, 1280, 800);
 	return 0;
 }
 

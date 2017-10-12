@@ -62,10 +62,10 @@
     <ClInclude Include="src\Object\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Structs\Vertex.h">
+    <ClInclude Include="src\Structs\ObjectStruct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Structs\ObjectStruct.h">
+    <ClInclude Include="src\Structs\VertexStruct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

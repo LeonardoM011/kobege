@@ -1,9 +1,18 @@
 #include "Object.h"
 
-Object::Object(float x, float y, float width, float height) :
+Object::Object() :
 	_vboID(0),
 	_tempTime(0.0f)
 {
+	
+}
+
+Object::~Object() {
+	if (_vboID != 0)
+		glDeleteBuffers(1, &_vboID);
+}
+
+void Object::init(float x, float y, float width, float height) {
 	objInfo.x = x;
 	objInfo.y = y;
 	objInfo.width = width;
@@ -16,7 +25,7 @@ Object::Object(float x, float y, float width, float height) :
 	if (_vboID == 0)
 		glGenBuffers(1, &_vboID);
 
-	Vertex vertexData[6];
+	VertexStruct vertexData[6];
 
 	vertexData[0].position.x = x + width;
 	vertexData[0].position.y = y + height;
@@ -55,11 +64,6 @@ Object::Object(float x, float y, float width, float height) :
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-Object::~Object() {
-	if (_vboID != 0)
-		glDeleteBuffers(1, &_vboID);
-}
-
 void Object::draw() {
 	shader.startUsing();
 
@@ -71,8 +75,8 @@ void Object::draw() {
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
-	glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void*)offsetof(Vertex, color));
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(VertexStruct), (void*)offsetof(VertexStruct, position));
+	glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(VertexStruct), (void*)offsetof(VertexStruct, color));
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 

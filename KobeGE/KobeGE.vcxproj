@@ -162,7 +162,7 @@
     <ClInclude Include="src\Input\InputManager.h" />
     <ClInclude Include="src\ErrorChecking\PrintError.h" />
     <ClInclude Include="src\Structs\ObjectStruct.h" />
-    <ClInclude Include="src\Structs\Vertex.h" />
+    <ClInclude Include="src\Structs\VertexStruct.h" />
     <ClInclude Include="src\System\InitManager.h" />
     <ClInclude Include="src\Window\WindowManager.h" />
   </ItemGroup>

@@ -1,7 +1,7 @@
 #pragma once
 #include <GL/glew.h>
 
-struct Vertex {
+struct VertexStruct {
 	struct Position {
 		float x;
 		float y;
