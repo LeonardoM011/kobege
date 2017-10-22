@@ -13,7 +13,7 @@ int main(void)
 	if (InitManager::initGlfw()) return PrintError::PrintLn(0, "Glfw failed to init");
 	WindowManager window;
 	if (window.create(1280, 800, "KobeGE")) return PrintError::PrintLn(1, "Window failed to create");
-	//InitManager::setViewport(window.getWidth(), window.getHeight());
+	InitManager::setViewport(window.getWidth(), window.getHeight());
 	if (InitManager::initGlew()) return PrintError::PrintLn(2, "Glew failed to init");
 	
 	std::cout << "OPENGL Version: " << glGetString(GL_VERSION) << std::endl;

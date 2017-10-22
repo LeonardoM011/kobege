@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
-#include "../ErrorChecking/PrintError.h"
+#include "ErrorChecking/PrintError.h"
 
 class ShaderManager {
 public:

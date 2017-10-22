@@ -1,7 +1,7 @@
 #pragma once
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "../Window/WindowManager.h"
+#include "Window/WindowManager.h"
 
 class InitManager {
 public:

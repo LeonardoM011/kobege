@@ -1,7 +1,7 @@
-#version 130
+#version 450
 
-in vec2 vertexPosition;
-in vec4 vertexColor;
+layout (location = 0) in vec2 vertexPosition;
+layout (location = 1) in vec4 vertexColor;
 
 out vec4 fragmentColor;
 

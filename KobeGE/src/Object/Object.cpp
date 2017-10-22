@@ -68,7 +68,7 @@ void Object::draw() {
 	shader.startUsing();
 
 	_tempTime += 0.001f;
-	shader.setUniform1f(shader.getUniformLocation("time"), _tempTime);
+	//shader.setUniform1f(shader.getUniformLocation("time"), _tempTime);
 
 	glBindBuffer(GL_ARRAY_BUFFER, _vboID);
 

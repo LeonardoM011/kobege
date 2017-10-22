@@ -2,7 +2,7 @@
 #include <string>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "../Input/InputManager.h"
+#include "Input/InputManager.h"
 
 class WindowManager {
 public:

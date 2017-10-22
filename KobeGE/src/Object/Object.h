@@ -2,9 +2,9 @@
 #include <GL/glew.h>
 #include <cstddef>
 #include <iostream>
-#include "../Structs/ObjectStruct.h"
-#include "../Structs/VertexStruct.h"
-#include "../Shaders/ShaderManager.h"
+#include "Structs/ObjectStruct.h"
+#include "Structs/VertexStruct.h"
+#include "Shaders/ShaderManager.h"
 
 class Object {
 public:
