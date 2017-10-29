@@ -17,7 +17,7 @@ void Object::init(float x, float y, float width, float height) {
 	objInfo.y = y;
 	objInfo.width = width;
 	objInfo.height = height;
-	shader.compileShaders("src/Shaders/shader.vert", "src/Shaders/shader.frag");
+	shader.compileShaders("res/shaders/shader.vert", "res/shaders/shader.frag");
 	shader.addAtribute("vertexPosition");
 	shader.addAtribute("vertexColor");
 	shader.linkShaders();
