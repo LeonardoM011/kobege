@@ -4,7 +4,6 @@
 #include <iostream>
 #include "Structs/ObjectStruct.h"
 #include "Structs/VertexStruct.h"
-#include "Shaders/ShaderManager.h"
 
 class Object {
 public:
@@ -14,8 +13,9 @@ public:
 	void draw();
 private:
 	ObjectStruct objInfo;
-	ShaderManager shader;
 	GLuint _vboID;
+	GLuint _vaoID;
+	GLuint _eboID;
 	float _tempTime;
 };
 

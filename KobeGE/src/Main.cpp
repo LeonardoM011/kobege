@@ -7,6 +7,7 @@
 #include "Window/WindowManager.h"
 #include "ErrorChecking/PrintError.h"
 #include "Object/Object.h"
+#include "Shaders/ShaderManager.h"
 
 int main(void)
 {
@@ -21,14 +22,22 @@ int main(void)
 	Object box;
 
 	box.init(-0.5f, -0.5f, 1.0f, 1.0f);
+	
+	ShaderManager shader;
+	shader.compileShaders("res/shaders/shader.vert", "res/shaders/shader.frag");
+	//shader.addAtribute("vertexPosition");
+	//shader.addAtribute("vertexColor");
+	shader.linkShaders();
 
 	while (window.closeRequested())
 	{
 		glClearColor(0.5f, 0.2f, 0.9f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		box.draw();
 		
+		shader.startUsing();
+		box.draw();
+		shader.stopUsing();
+
 		window.processInput();
 		window.swap();
 		window.pollEvents();

@@ -68,6 +68,9 @@
     <ClInclude Include="src\Structs\VertexStruct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="res\imageloader\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\shader.frag" />
