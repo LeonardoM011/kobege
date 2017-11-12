@@ -36,7 +36,6 @@ void Line::init(float x1, float y1, float x2, float y2, float width) {
 	};
 
 	vertexCount = sizeof(indices) / sizeof(*indices);
-	std::cout << sizeof(indices) / sizeof(*indices) << std::endl;
 
 	upload(vertexData, sizeof(vertexData), indices, sizeof(indices));
 
