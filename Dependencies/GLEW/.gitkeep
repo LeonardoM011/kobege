@@ -1,8 +1,0 @@
-.vs
-Dependecies/GLEW/*
-!Dependecies/GLEW/.gitkeep
-Dependecies/GLFW/*
-!Dependecies/GLFW/.gitkeep
-Dependecies/GLM/*
-!Dependecies/GLM/.gitkeep
-bin
