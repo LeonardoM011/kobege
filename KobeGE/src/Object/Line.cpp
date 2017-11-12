@@ -1,25 +1,14 @@
-#include "Object.h"
+#include "Line.h"
 
-Object::Object() :
-	_vaoID(0),
-	_vboID(0),
-	_eboID(0)
-{
-	
+Line::Line() {
+
 }
 
-Object::~Object() {
-	if (_vaoID != 0)
-		glDeleteVertexArrays(1, &_vaoID);
-	if (_vboID != 0)
-		glDeleteBuffers(1, &_vboID);
-	if (_eboID != 0)
-		glDeleteBuffers(1, &_eboID);
-	
+Line::~Line() {
+
 }
 
-void Object::init(ObjectStruct objInfo) {
-	
+void Line::init(float x1, float y1, float x2, float y2, float width) {
 	if (_vaoID == 0)
 		glGenVertexArrays(1, &_vaoID);
 	if (_vboID == 0)
@@ -27,26 +16,15 @@ void Object::init(ObjectStruct objInfo) {
 	if (_eboID == 0)
 		glGenBuffers(1, &_eboID);
 
-	VertexStruct vertexData[4];
+	VertexStruct vertexData[2];
 
-	float x = objInfo.x;
-	float y = objInfo.y;
-	float width = objInfo.width;
-	float height = objInfo.height;
+	vertexData[0].position.x = x1;
+	vertexData[0].position.y = y1;
 
-	vertexData[0].position.x = x + width;
-	vertexData[0].position.y = y + height;
+	vertexData[1].position.x = x2;
+	vertexData[1].position.y = y2;
 
-	vertexData[1].position.x = x + width;
-	vertexData[1].position.y = y;
-
-	vertexData[2].position.x = x;
-	vertexData[2].position.y = y;
-
-	vertexData[3].position.x = x;
-	vertexData[3].position.y = y + height;
-	
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 2; i++) {
 		vertexData[i].color.r = 255;
 		vertexData[i].color.g = 255;
 		vertexData[i].color.b = 255;
@@ -54,17 +32,17 @@ void Object::init(ObjectStruct objInfo) {
 	}
 
 	GLuint indices[]{
-		0, 1, 3,
-		1, 2, 3
+		0, 1
 	};
 
 	vertexCount = sizeof(indices) / sizeof(*indices);
+	std::cout << sizeof(indices) / sizeof(*indices) << std::endl;
 
 	upload(vertexData, sizeof(vertexData), indices, sizeof(indices));
-	
+
 }
 
-void Object::upload(VertexStruct vertexData[], int sizeOfVertexData, GLuint indices[], int sizeOfIndices) {
+void Line::upload(VertexStruct vertexData[], int sizeOfVertexData, GLuint indices[], int sizeOfIndices) {
 	glBindVertexArray(_vaoID);
 	glBindBuffer(GL_ARRAY_BUFFER, _vboID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _eboID);
@@ -88,8 +66,8 @@ void Object::upload(VertexStruct vertexData[], int sizeOfVertexData, GLuint indi
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void Object::draw() {
+void Line::draw() {
 	glBindVertexArray(_vaoID);
-	glDrawElements(GL_TRIANGLES, vertexCount, GL_UNSIGNED_INT, nullptr);
+	glDrawElements(GL_LINES, vertexCount, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
 }

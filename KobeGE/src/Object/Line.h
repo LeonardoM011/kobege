@@ -1,20 +1,20 @@
 #pragma once
 #include <GL/glew.h>
-#include <cstddef>
-#include <iostream>
+#include "Object/Object.h"
 #include "Structs/ObjectStruct.h"
-#include "Structs/VertexStruct.h"
 
-class Object {
+// PLEASE DON'T USE THIS YET!!!
+
+class Line {
 public:
-	Object();
-	~Object();
-	virtual void init(ObjectStruct objInfo);
+	Line();
+	~Line();
+	void init(float x1, float y1, float x2, float y2, float width = 0);
 	void draw();
 private:
 	void upload(VertexStruct vertexData[], int sizeOfVertexData, GLuint indices[], int sizeOfIndices);
-	GLuint _vboID;
 	GLuint _vaoID;
+	GLuint _vboID;
 	GLuint _eboID;
 	int vertexCount;
 };

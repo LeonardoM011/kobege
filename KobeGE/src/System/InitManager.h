@@ -5,8 +5,16 @@
 
 class InitManager {
 public:
-	static int initGlfw();
-	static int initGlew();
-	static void setViewport(int windowWidth, int windowHeight);
+	static int initGlfw() {
+		if (!glfwInit()) return -1;
+		return 0;
+	}
+	static int initGlew() {
+		if (glewInit() != GLEW_OK) return -1;
+		return 0;
+	}
+	static void setViewport(int windowWidth, int windowHeight) {
+		glViewport(0, 0, windowWidth, windowHeight);
+	}
 };
 

@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "Input/InputManager.h"
+#include "externcode/glfwexterns/GLFWWindowPos.h"
 
 class WindowManager {
 public:

@@ -21,9 +21,6 @@
     <ClCompile Include="src\Window\WindowManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\System\InitManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ErrorChecking\PrintError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -37,6 +34,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Object\Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Object\Line.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,12 +68,18 @@
     <ClInclude Include="src\Structs\VertexStruct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="res\imageloader\stb_image.h">
+    <ClInclude Include="src\Object\Line.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="res\externcode\glfwexterns\GLFWWindowPos.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="res\externcode\imageloader\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\shader.frag" />
-    <None Include="res\shaders\shader.vert" />
+    <None Include="res\shaders\ObjectColor.frag" />
+    <None Include="res\shaders\ObjectColor.vert" />
   </ItemGroup>
 </Project>

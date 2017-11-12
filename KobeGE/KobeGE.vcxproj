@@ -150,17 +150,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Object\Line.cpp" />
     <ClCompile Include="src\Object\Object.cpp" />
     <ClCompile Include="src\Shaders\ShaderManager.cpp" />
     <ClCompile Include="src\Renderer\RenderManager.cpp" />
     <ClCompile Include="src\Input\InputManager.cpp" />
     <ClCompile Include="src\ErrorChecking\PrintError.cpp" />
-    <ClCompile Include="src\System\InitManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Window\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="res\imageloader\stb_image.h" />
+    <ClInclude Include="src\Object\Line.h" />
+    <ClInclude Include="res\externcode\glfwexterns\GLFWWindowPos.h" />
+    <ClInclude Include="res\externcode\imageloader\stb_image.h" />
     <ClInclude Include="src\Object\Object.h" />
     <ClInclude Include="src\Shaders\ShaderManager.h" />
     <ClInclude Include="src\Renderer\RenderManager.h" />
@@ -172,8 +174,8 @@
     <ClInclude Include="src\Window\WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\shader.frag" />
-    <None Include="res\shaders\shader.vert" />
+    <None Include="res\shaders\ObjectColor.frag" />
+    <None Include="res\shaders\ObjectColor.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
