@@ -1,6 +1,2 @@
 .vs
 bin
-Dependencies
-!Dependencies/GLEW/.gitkeep
-!Dependencies/GLFW/.gitkeep
-!Dependencies/GLM/.gitkeep
