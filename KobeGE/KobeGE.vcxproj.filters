@@ -36,9 +36,6 @@
     <ClCompile Include="src\Object\Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Object\Line.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Window\WindowManager.h">
@@ -66,9 +63,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Structs\VertexStruct.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Object\Line.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="res\externcode\glfwexterns\GLFWWindowPos.h">

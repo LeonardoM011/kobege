@@ -8,7 +8,6 @@
 #include "ErrorChecking/PrintError.h"
 #include "Object/Object.h"
 #include "Shaders/ShaderManager.h"
-#include "Object/Line.h"
 
 int main(void)
 {

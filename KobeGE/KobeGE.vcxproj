@@ -150,7 +150,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Object\Line.cpp" />
     <ClCompile Include="src\Object\Object.cpp" />
     <ClCompile Include="src\Shaders\ShaderManager.cpp" />
     <ClCompile Include="src\Renderer\RenderManager.cpp" />
@@ -160,7 +159,6 @@
     <ClCompile Include="src\Window\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Object\Line.h" />
     <ClInclude Include="res\externcode\glfwexterns\GLFWWindowPos.h" />
     <ClInclude Include="res\externcode\imageloader\stb_image.h" />
     <ClInclude Include="src\Object\Object.h" />
