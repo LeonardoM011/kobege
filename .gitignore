@@ -1,4 +1,5 @@
 .vs
 bin
 Dependencies
-KobeGE/res/externcode/
+KobeGE/res/externcode/imageloader/*
+KobeGE/res/externcode/imageloader
