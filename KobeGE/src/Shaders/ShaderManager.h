@@ -19,6 +19,7 @@ public:
 	void linkShaders();
 	void startUsing();
 	void stopUsing();
+	GLuint getID();
 
 	void setBool(const std::string &name, bool value) const;
 	void setInt(const std::string &name, int value) const;

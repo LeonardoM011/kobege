@@ -13,6 +13,10 @@ ShaderManager::~ShaderManager() {
 
 }
 
+GLuint ShaderManager::getID() {
+	return _programID;
+}
+
 std::string ShaderManager::openFile(const std::string &shaderFilePath) {
 	std::string fileContents = "", line = "";
 

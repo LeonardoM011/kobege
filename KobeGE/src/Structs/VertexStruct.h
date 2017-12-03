@@ -15,4 +15,10 @@ struct VertexStruct {
 		GLubyte a;
 	};
 	Color color;
+
+	struct TexCoord {
+		float x;
+		float y;
+	};
+	TexCoord texCoord;
 };

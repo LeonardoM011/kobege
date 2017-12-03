@@ -1,5 +1,5 @@
 #include "WindowManager.h"
-#define STB_IMAGE_IMPLEMENTATION
+//#define STB_IMAGE_IMPLEMENTATION
 #include "externcode/imageloader/stb_image.h"
 
 WindowManager::WindowManager() :
