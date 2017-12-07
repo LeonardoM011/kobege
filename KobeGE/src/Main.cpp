@@ -19,18 +19,14 @@ int main(void)
 	
 	std::cout << "OPENGL Version: " << glGetString(GL_VERSION) << std::endl;
 
-	ShaderManager shader;
-	shader.compileShaders("res/shaders/objectColor.vert", "res/shaders/objectColor.frag");
-	shader.linkShaders();
-
-	/*Object player1;
-	player1.init(ObjectStruct{ -0.9f, -0.2f, 0.02f, 0.4f }, "res/images/icon_default.png");
+	Object player1;
+	player1.init(ObjectStruct{ -0.9f, -0.2f, 0.02f, 0.4f }, "res/images/icon_default.png", window.getWidth(), window.getHeight());
 	
-	Object player2;
+	/*Object player2;
 	player2.init(ObjectStruct{ 0.9f, -0.2f, 0.02f, 0.4f }, "res/images/icon_default.png");*/
 
 	Object box;
-	box.init(ObjectStruct{ -0.5f, -0.5f, 1.0f, 1.0f }, "res/images/icon_default.png", &shader);
+	box.init(ObjectStruct{ -0.5f, -0.5f, 1.0f, 1.0f }, "res/images/Gerbil 1.png", window.getWidth(), window.getHeight());
 
 	
 
@@ -39,8 +35,8 @@ int main(void)
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-		/*player1.draw(shader);
-		player2.draw(shader);*/
+		player1.draw();
+		/*player2.draw(shader);*/
 		box.draw();
 
 		window.processInput();

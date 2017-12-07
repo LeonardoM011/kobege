@@ -20,6 +20,9 @@ int WindowManager::create(int width, int height, const char *title) {
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 	glfwWindowHint(GLFW_REFRESH_RATE, 60);
 	glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
+	#ifdef __APPLE__
+		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
+	#endif
 
 	_window = glfwCreateWindow(width, height, title, NULL, NULL);
 

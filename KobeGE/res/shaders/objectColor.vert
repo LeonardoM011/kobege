@@ -7,10 +7,11 @@ layout (location = 2) in vec2 aTexCoord;
 out vec4 fragmentColor;
 out vec2 texCoord;
 
-uniform mat4 transform;
+uniform mat4 view;
+uniform mat4 model;
 
 void main() {
-	gl_Position = transform * vec4(vertexPosition, 0.0, 1.0);
+	gl_Position = model * view * vec4(vertexPosition, 0.0, 1.0);
 	fragmentColor = vertexColor;
 	texCoord = aTexCoord;
 }

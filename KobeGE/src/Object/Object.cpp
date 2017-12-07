@@ -2,12 +2,31 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "externcode/imageloader/stb_image.h"
 
+ShaderManager Object::_shader;
+bool Object::_isShaderSetup = false;
+
 Object::Object() :
 	_vaoID(0),
 	_vboID(0),
-	_eboID(0)
+	_eboID(0),
+	_texID(0),
+	_vertexCount(0),
+	_windowWidth(0),
+	_windowHeight(0),
+	_viewMatrix		   (1.0f, 0.0f, 0.0f, 0.0f,
+						0.0f, 1.0f, 0.0f, 0.0f,
+						0.0f, 0.0f, 1.0f, 0.0f,
+						0.0f, 0.0f, 0.0f, 1.0f),
+	_modelMatrix	   (1.0f, 0.0f, 0.0f, 0.0f,
+						0.0f, 1.0f, 0.0f, 0.0f,
+						0.0f, 0.0f, 1.0f, 0.0f,
+						0.0f, 0.0f, 0.0f, 1.0f)
 {
-	
+	if (!_isShaderSetup) {
+		_shader.compileShaders("res/shaders/objectColor.vert", "res/shaders/objectColor.frag");
+		_shader.linkShaders();
+		_isShaderSetup = true;
+	}
 }
 
 Object::~Object() {
@@ -19,11 +38,11 @@ Object::~Object() {
 		glDeleteBuffers(1, &_eboID);
 	if (_texID != 0)
 		glDeleteTextures(1, &_texID);
-	
 }
 
-void Object::init(ObjectStruct objInfo, std::string textureFilePath, ShaderManager *shader) {
-	_shader = shader;
+void Object::init(ObjectStruct objInfo, std::string textureFilePath, int windowWidth, int windowHeight) {
+	_windowHeight = windowHeight;
+	_windowWidth = windowWidth;
 
 	generate(_vboID, _vaoID, _eboID, _texID);
 
@@ -66,23 +85,39 @@ void Object::init(ObjectStruct objInfo, std::string textureFilePath, ShaderManag
 		1, 2, 3
 	};
 
-	vertexCount = sizeof(indices) / sizeof(*indices);
+	_vertexCount = sizeof(indices) / sizeof(*indices);
 
 	upload(vertexData, sizeof(vertexData), indices, sizeof(indices), textureFilePath);
 	
-	_shader->startUsing();
-	_shader->setInt("textureData", 0);
-	_shader->stopUsing();
+	// I'm not sure if this is needed
+	_shader.startUsing();
+	_shader.setInt("textureData", 0);
+	_shader.stopUsing();
 }
 
 void Object::upload(VertexStruct vertexData[], int sizeOfVertexData, GLuint indices[], int sizeOfIndices, std::string texturePath) {
+	// Binding all this to a VAO list
 	glBindVertexArray(_vaoID);
 
+	// Vertices buffer array
 	glBindBuffer(GL_ARRAY_BUFFER, _vboID);
 	glBufferData(GL_ARRAY_BUFFER, sizeOfVertexData, vertexData, GL_STATIC_DRAW);
 	
+	// Elements buffer array
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _eboID);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeOfIndices, indices, GL_STATIC_DRAW);
+
+	// Position
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(VertexStruct), (void*)offsetof(VertexStruct, position));
+	glEnableVertexAttribArray(0);
+
+	// Color
+	glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(VertexStruct), (void*)offsetof(VertexStruct, color));
+	glEnableVertexAttribArray(1);
+
+	// TexCoord
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexStruct), (void*)offsetof(VertexStruct, texCoord));
+	glEnableVertexAttribArray(2);
 
 	// ---- Textures ----
 	glBindTexture(GL_TEXTURE_2D, _texID);
@@ -105,30 +140,6 @@ void Object::upload(VertexStruct vertexData[], int sizeOfVertexData, GLuint indi
 	}
 	// Freeing image data
 	stbi_image_free(textureData);
-
-
-	
-	// Position
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(VertexStruct), (void*)offsetof(VertexStruct, position));
-	glEnableVertexAttribArray(0);
-
-	// Color
-	glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(VertexStruct), (void*)offsetof(VertexStruct, color));
-	glEnableVertexAttribArray(1);
-
-	// TexCoord
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexStruct), (void*)offsetof(VertexStruct, texCoord));
-	glEnableVertexAttribArray(2);
-
-	
-	//glDisableVertexAttribArray(0);
-	//glDisableVertexAttribArray(1);
-	//glDisableVertexAttribArray(2);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	//glBindVertexArray(0);
-
-	
 }
 
 void Object::generate(GLuint &vboID, GLuint &vaoID, GLuint &eboID, GLuint &texID) {
@@ -143,26 +154,28 @@ void Object::generate(GLuint &vboID, GLuint &vaoID, GLuint &eboID, GLuint &texID
 }
 
 void Object::draw() {
-	_shader->startUsing();
+	_shader.startUsing();
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, _texID);
 
-	glm::mat4 transform{1.0f, 0.0f, 0.0f, 0.0f,
-							0.0f, 1.0f, 0.0f, 0.0f,
-							0.0f, 0.0f, 0.0f, 0.0f,
-							0.0f, 0.0f, 0.0f, 1.0f};
-	transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
-	transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+	_viewMatrix = { 1.0f, 0.0f, 0.0f, 0.0f,
+					0.0f, 1.0f, 0.0f, 0.0f,
+					0.0f, 0.0f, 1.0f, 0.0f,
+					0.0f, 0.0f, 0.0f, 1.0f };
+	_viewMatrix = glm::translate(_viewMatrix, glm::vec3(0.0f, 0.0f, -0.1f));
+	_shader.setMat4("view", _viewMatrix);
 
-	unsigned int transformLoc = glGetUniformLocation(_shader->getID(), "transform");
-	if (transformLoc == GL_INVALID_INDEX) PrintError::PrintLn(5, "Uniform location not found");
+	_modelMatrix =    { 1.0f, 0.0f, 0.0f, 0.0f,
+						0.0f, 1.0f, 0.0f, 0.0f,
+						0.0f, 0.0f, 1.0f, 0.0f,
+						0.0f, 0.0f, 0.0f, 1.0f };
+	_modelMatrix = glm::rotate(_modelMatrix, glm::radians(2.0f * 20.0f), glm::vec3(1.0f, 0.3f, 0.5f));
+	_shader.setMat4("model", _modelMatrix);
 
-	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
-	
 	glBindVertexArray(_vaoID);
-	glDrawElements(GL_TRIANGLES, vertexCount, GL_UNSIGNED_INT, nullptr);
+	glDrawElements(GL_TRIANGLES, _vertexCount, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
 
-	_shader->stopUsing();
+	_shader.stopUsing();
 }
