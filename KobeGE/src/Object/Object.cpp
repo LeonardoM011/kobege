@@ -10,6 +10,8 @@ Object::Object() :
 	_vertexCount(0),
 	_windowWidth(0),
 	_windowHeight(0),
+	_width(0),
+	_height(0),
 	_modelMatrix	   (1.0f, 0.0f, 0.0f, 0.0f,
 						0.0f, 1.0f, 0.0f, 0.0f,
 						0.0f, 0.0f, 1.0f, 0.0f,
@@ -33,6 +35,8 @@ void Object::init(glm::vec2 pos, GLdouble width, GLdouble height, ShaderManager 
 	_windowHeight = windowHeight;
 	_windowWidth = windowWidth;
 	_shader = shader;
+	_width = width;
+	_height = height;
 
 	generate(_vboID, _vaoID, _eboID, _texID);
 
@@ -79,6 +83,8 @@ void Object::init(glm::vec2 pos, GLdouble width, GLdouble height, ShaderManager 
 	_windowHeight = windowHeight;
 	_windowWidth = windowWidth;
 	_shader = shader;
+	_width = width;
+	_height = height;
 
 	generate(_vboID, _vaoID, _eboID, _texID);
 
@@ -135,9 +141,10 @@ void Object::upload(TexStruct vertexData[], int sizeOfVertexData, GLuint indices
 	glVertexAttribPointer(1, 2, GL_DOUBLE, GL_FALSE, sizeof(TexStruct), (void*)offsetof(TexStruct, texCoord));
 	glEnableVertexAttribArray(1);
 
+
 	// ---- Textures ----
 	glBindTexture(GL_TEXTURE_2D, _texID);
-	// Some tex parameters
+	// Some Tex Parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -146,7 +153,7 @@ void Object::upload(TexStruct vertexData[], int sizeOfVertexData, GLuint indices
 	int width, height, bpp;
 	stbi_set_flip_vertically_on_load(true);
 	unsigned char *textureData = stbi_load(texturePath.c_str(), &width, &height, &bpp, 0);
-	// Error Checking and loading data to shader
+	// Error Checking and Loading Data to Shader
 	if (textureData) {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData);
 		glGenerateMipmap(GL_TEXTURE_2D);
@@ -156,6 +163,14 @@ void Object::upload(TexStruct vertexData[], int sizeOfVertexData, GLuint indices
 	}
 	// Freeing image data
 	stbi_image_free(textureData);
+
+	// Unbinding Everything
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Object::upload(ColorStruct vertexData[], int sizeOfVertexData, GLuint indices[], int sizeOfIndices) {
@@ -177,6 +192,13 @@ void Object::upload(ColorStruct vertexData[], int sizeOfVertexData, GLuint indic
 	// Color
 	glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ColorStruct), (void*)offsetof(ColorStruct, color));
 	glEnableVertexAttribArray(1);
+
+	// Unbinding Everything
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
 }
 
 
@@ -217,3 +239,5 @@ void Object::rotate(float angle, glm::vec3 axis) {
 	_shader.setMat4("model", _modelMatrix);
 	_shader.stopUsing();
 }
+
+

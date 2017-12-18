@@ -150,7 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="src\Player\Player.cpp" />
     <ClCompile Include="src\Object\Camera.cpp" />
     <ClCompile Include="src\Object\Object.cpp" />
     <ClCompile Include="src\Shaders\ShaderManager.cpp" />
@@ -160,7 +160,7 @@
     <ClCompile Include="src\Window\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="src\Player\Player.h" />
     <ClInclude Include="src\Object\Camera.h" />
     <ClInclude Include="res\externcode\glfwexterns\GLFWWindowPos.h" />
     <ClInclude Include="res\externcode\imageloader\stb_image.h" />

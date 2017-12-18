@@ -9,8 +9,7 @@
 #include "Object/Object.h"
 #include "Shaders/ShaderManager.h"
 #include "Object/Camera.h"
-
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+#include "Player/Player.h"
 
 int main(int argc, char** argv) {
 	if (InitManager::initGlfw()) return PrintError::PrintLn(0, "Glfw failed to init");
@@ -33,9 +32,12 @@ int main(int argc, char** argv) {
 	camera.addShader(textureShader);
 	camera.addShader(colorShader);
 
-	Object player;
+	Player player;
 	player.init(glm::vec2(-0.9f, 0.0f), 0.02f, 0.4f, colorShader, window.getWidth(), window.getHeight(), 255, 255, 255, 255);
 	
+	Object line1;
+	line1.init(glm::vec2(0.0f, -0.8), 0.04f, 0.4f, colorShader, window.getWidth(), window.getHeight(), 255, 255, 255, 255);
+
 	glfwSetKeyCallback(window.window, InputManager::key_callback);
 
 	while (window.closeRequested())
@@ -43,11 +45,8 @@ int main(int argc, char** argv) {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-		if (InputManager::keydown[GLFW_KEY_SPACE]) {
-			player.draw();
-		}
-		
-
+		player.draw();
+		line1.draw();
 
 		window.swap();
 		window.pollEvents();
