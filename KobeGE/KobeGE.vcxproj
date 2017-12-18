@@ -150,30 +150,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="src\Object\Camera.cpp" />
     <ClCompile Include="src\Object\Object.cpp" />
     <ClCompile Include="src\Shaders\ShaderManager.cpp" />
-    <ClCompile Include="src\Renderer\RenderManager.cpp" />
     <ClCompile Include="src\Input\InputManager.cpp" />
     <ClCompile Include="src\ErrorChecking\PrintError.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Window\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="src\Object\Camera.h" />
     <ClInclude Include="res\externcode\glfwexterns\GLFWWindowPos.h" />
     <ClInclude Include="res\externcode\imageloader\stb_image.h" />
     <ClInclude Include="src\Object\Object.h" />
     <ClInclude Include="src\Shaders\ShaderManager.h" />
-    <ClInclude Include="src\Renderer\RenderManager.h" />
     <ClInclude Include="src\Input\InputManager.h" />
     <ClInclude Include="src\ErrorChecking\PrintError.h" />
-    <ClInclude Include="src\Structs\ObjectStruct.h" />
     <ClInclude Include="src\Structs\VertexStruct.h" />
     <ClInclude Include="src\System\InitManager.h" />
     <ClInclude Include="src\Window\WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\ObjectColor.frag" />
-    <None Include="res\shaders\ObjectColor.vert" />
+    <None Include="res\shaders\ObjectColorShader.frag" />
+    <None Include="res\shaders\ObjectColorShader.vert" />
+    <None Include="res\shaders\ObjectTextureShader.frag" />
+    <None Include="res\shaders\ObjectTextureShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

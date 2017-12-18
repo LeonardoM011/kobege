@@ -1,10 +1,24 @@
 #pragma once
 #include <GL/glew.h>
 
-struct VertexStruct {
+struct TexStruct {
 	struct Position {
-		float x;
-		float y;
+		GLdouble x;
+		GLdouble y;
+	};
+	Position position;
+
+	struct TexCoord {
+		GLdouble x;
+		GLdouble y;
+	};
+	TexCoord texCoord;
+};
+
+struct ColorStruct {
+	struct Position {
+		GLdouble x;
+		GLdouble y;
 	};
 	Position position;
 
@@ -15,10 +29,4 @@ struct VertexStruct {
 		GLubyte a;
 	};
 	Color color;
-
-	struct TexCoord {
-		float x;
-		float y;
-	};
-	TexCoord texCoord;
 };

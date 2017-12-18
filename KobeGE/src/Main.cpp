@@ -8,9 +8,11 @@
 #include "ErrorChecking/PrintError.h"
 #include "Object/Object.h"
 #include "Shaders/ShaderManager.h"
+#include "Object/Camera.h"
 
-int main(void)
-{
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+int main(int argc, char** argv) {
 	if (InitManager::initGlfw()) return PrintError::PrintLn(0, "Glfw failed to init");
 	WindowManager window;
 	if (window.create(720, 480, "KobeGE")) return PrintError::PrintLn(1, "Window failed to create");
@@ -19,27 +21,34 @@ int main(void)
 	
 	std::cout << "OPENGL Version: " << glGetString(GL_VERSION) << std::endl;
 
-	Object player1;
-	player1.init(ObjectStruct{ -0.9f, -0.2f, 0.02f, 0.4f }, "res/images/icon_default.png", window.getWidth(), window.getHeight());
-	
-	/*Object player2;
-	player2.init(ObjectStruct{ 0.9f, -0.2f, 0.02f, 0.4f }, "res/images/icon_default.png");*/
+	ShaderManager textureShader;
+	textureShader.compileShaders("res/shaders/ObjectTextureShader.vert", "res/shaders/ObjectTextureShader.frag");
+	textureShader.linkShaders();
 
-	Object box;
-	box.init(ObjectStruct{ -0.5f, -0.5f, 1.0f, 1.0f }, "res/images/Gerbil 1.png", window.getWidth(), window.getHeight());
+	ShaderManager colorShader;
+	colorShader.compileShaders("res/shaders/ObjectColorShader.vert", "res/shaders/ObjectColorShader.frag");
+	colorShader.linkShaders();
 
+	Camera camera;
+	camera.addShader(textureShader);
+	camera.addShader(colorShader);
+
+	Object player;
+	player.init(glm::vec2(-0.9f, 0.0f), 0.02f, 0.4f, colorShader, window.getWidth(), window.getHeight(), 255, 255, 255, 255);
 	
+	glfwSetKeyCallback(window.window, InputManager::key_callback);
 
 	while (window.closeRequested())
 	{
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-		player1.draw();
-		/*player2.draw(shader);*/
-		box.draw();
+		if (InputManager::keydown[GLFW_KEY_SPACE]) {
+			player.draw();
+		}
+		
 
-		window.processInput();
+
 		window.swap();
 		window.pollEvents();
 	}

@@ -2,9 +2,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "externcode/imageloader/stb_image.h"
 
-ShaderManager Object::_shader;
-bool Object::_isShaderSetup = false;
-
 Object::Object() :
 	_vaoID(0),
 	_vboID(0),
@@ -13,20 +10,12 @@ Object::Object() :
 	_vertexCount(0),
 	_windowWidth(0),
 	_windowHeight(0),
-	_viewMatrix		   (1.0f, 0.0f, 0.0f, 0.0f,
-						0.0f, 1.0f, 0.0f, 0.0f,
-						0.0f, 0.0f, 1.0f, 0.0f,
-						0.0f, 0.0f, 0.0f, 1.0f),
 	_modelMatrix	   (1.0f, 0.0f, 0.0f, 0.0f,
 						0.0f, 1.0f, 0.0f, 0.0f,
 						0.0f, 0.0f, 1.0f, 0.0f,
 						0.0f, 0.0f, 0.0f, 1.0f)
 {
-	if (!_isShaderSetup) {
-		_shader.compileShaders("res/shaders/objectColor.vert", "res/shaders/objectColor.frag");
-		_shader.linkShaders();
-		_isShaderSetup = true;
-	}
+	
 }
 
 Object::~Object() {
@@ -40,45 +29,36 @@ Object::~Object() {
 		glDeleteTextures(1, &_texID);
 }
 
-void Object::init(ObjectStruct objInfo, std::string textureFilePath, int windowWidth, int windowHeight) {
+void Object::init(glm::vec2 pos, GLdouble width, GLdouble height, ShaderManager shader, int windowWidth, int windowHeight, std::string textureFilePath) {
 	_windowHeight = windowHeight;
 	_windowWidth = windowWidth;
+	_shader = shader;
 
 	generate(_vboID, _vaoID, _eboID, _texID);
 
-	VertexStruct vertexData[4];
+	TexStruct vertexData[4];
 
-	float x = objInfo.x;
-	float y = objInfo.y;
-	float width = objInfo.width;
-	float height = objInfo.height;
-
-	vertexData[0].position.x = x + width;
-	vertexData[0].position.y = y + height;
+	vertexData[0].position.x = width * 0.5;
+	vertexData[0].position.y = height * 0.5;
 	vertexData[0].texCoord.x = 1.0f;
 	vertexData[0].texCoord.y = 1.0f;
 
-	vertexData[1].position.x = x + width;
-	vertexData[1].position.y = y;
+	vertexData[1].position.x = width * 0.5;
+	vertexData[1].position.y = height * -0.5;
 	vertexData[1].texCoord.x = 1.0f;
 	vertexData[1].texCoord.y = 0.0f;
 
-	vertexData[2].position.x = x;
-	vertexData[2].position.y = y;
+	vertexData[2].position.x = width * -0.5;
+	vertexData[2].position.y = height * -0.5;
 	vertexData[2].texCoord.x = 0.0f;
 	vertexData[2].texCoord.y = 0.0f;
 
-	vertexData[3].position.x = x;
-	vertexData[3].position.y = y + height;
+	vertexData[3].position.x = width * -0.5;
+	vertexData[3].position.y = height * 0.5;
 	vertexData[3].texCoord.x = 0.0f;
 	vertexData[3].texCoord.y = 1.0f;
-	
-	for (int i = 0; i < 4; i++) {
-		vertexData[i].color.r = 255;
-		vertexData[i].color.g = 255;
-		vertexData[i].color.b = 255;
-		vertexData[i].color.a = 255;
-	}
+
+	move(glm::vec3(pos.x, pos.y, 0.0f));
 
 	GLuint indices[]{
 		0, 1, 3,
@@ -88,14 +68,54 @@ void Object::init(ObjectStruct objInfo, std::string textureFilePath, int windowW
 	_vertexCount = sizeof(indices) / sizeof(*indices);
 
 	upload(vertexData, sizeof(vertexData), indices, sizeof(indices), textureFilePath);
-	
+
 	// I'm not sure if this is needed
-	_shader.startUsing();
-	_shader.setInt("textureData", 0);
-	_shader.stopUsing();
+	/*_textureShader.startUsing();
+	_textureShader.setInt("textureData", 0);
+	_textureShader.stopUsing();*/
 }
 
-void Object::upload(VertexStruct vertexData[], int sizeOfVertexData, GLuint indices[], int sizeOfIndices, std::string texturePath) {
+void Object::init(glm::vec2 pos, GLdouble width, GLdouble height, ShaderManager shader, int windowWidth, int windowHeight, GLubyte r, GLubyte g, GLubyte b, GLubyte a) {
+	_windowHeight = windowHeight;
+	_windowWidth = windowWidth;
+	_shader = shader;
+
+	generate(_vboID, _vaoID, _eboID, _texID);
+
+	ColorStruct vertexData[4];
+
+	vertexData[0].position.x = width * 0.5;
+	vertexData[0].position.y = height * 0.5;
+
+	vertexData[1].position.x = width * 0.5;
+	vertexData[1].position.y = height * -0.5;
+
+	vertexData[2].position.x = width * -0.5;
+	vertexData[2].position.y = height * -0.5;
+
+	vertexData[3].position.x = width * -0.5;
+	vertexData[3].position.y = height * 0.5;
+
+	move(glm::vec3(pos.x, pos.y, 0.0f));
+
+	for (int i = 0; i < 4; i++) {
+		vertexData[i].color.r = r;
+		vertexData[i].color.g = g;
+		vertexData[i].color.b = b;
+		vertexData[i].color.a = a;
+	}
+
+	GLuint indices[]{
+		0, 1, 3,
+		1, 2, 3
+	};
+
+	_vertexCount = sizeof(indices) / sizeof(*indices);
+
+	upload(vertexData, sizeof(vertexData), indices, sizeof(indices));
+}
+
+void Object::upload(TexStruct vertexData[], int sizeOfVertexData, GLuint indices[], int sizeOfIndices, std::string texturePath) {
 	// Binding all this to a VAO list
 	glBindVertexArray(_vaoID);
 
@@ -108,16 +128,12 @@ void Object::upload(VertexStruct vertexData[], int sizeOfVertexData, GLuint indi
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeOfIndices, indices, GL_STATIC_DRAW);
 
 	// Position
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(VertexStruct), (void*)offsetof(VertexStruct, position));
+	glVertexAttribPointer(0, 2, GL_DOUBLE, GL_FALSE, sizeof(TexStruct), (void*)offsetof(TexStruct, position));
 	glEnableVertexAttribArray(0);
-
-	// Color
-	glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(VertexStruct), (void*)offsetof(VertexStruct, color));
-	glEnableVertexAttribArray(1);
-
+	
 	// TexCoord
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexStruct), (void*)offsetof(VertexStruct, texCoord));
-	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(1, 2, GL_DOUBLE, GL_FALSE, sizeof(TexStruct), (void*)offsetof(TexStruct, texCoord));
+	glEnableVertexAttribArray(1);
 
 	// ---- Textures ----
 	glBindTexture(GL_TEXTURE_2D, _texID);
@@ -142,6 +158,28 @@ void Object::upload(VertexStruct vertexData[], int sizeOfVertexData, GLuint indi
 	stbi_image_free(textureData);
 }
 
+void Object::upload(ColorStruct vertexData[], int sizeOfVertexData, GLuint indices[], int sizeOfIndices) {
+	// Binding all this to a VAO list
+	glBindVertexArray(_vaoID);
+
+	// Vertices buffer array
+	glBindBuffer(GL_ARRAY_BUFFER, _vboID);
+	glBufferData(GL_ARRAY_BUFFER, sizeOfVertexData, vertexData, GL_STATIC_DRAW);
+
+	// Elements buffer array
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _eboID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeOfIndices, indices, GL_STATIC_DRAW);
+
+	// Position
+	glVertexAttribPointer(0, 2, GL_DOUBLE, GL_FALSE, sizeof(ColorStruct), (void*)offsetof(ColorStruct, position));
+	glEnableVertexAttribArray(0);
+
+	// Color
+	glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ColorStruct), (void*)offsetof(ColorStruct, color));
+	glEnableVertexAttribArray(1);
+}
+
+
 void Object::generate(GLuint &vboID, GLuint &vaoID, GLuint &eboID, GLuint &texID) {
 	if (vaoID == 0)
 		glGenVertexArrays(1, &vaoID);
@@ -159,23 +197,23 @@ void Object::draw() {
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, _texID);
 
-	_viewMatrix = { 1.0f, 0.0f, 0.0f, 0.0f,
-					0.0f, 1.0f, 0.0f, 0.0f,
-					0.0f, 0.0f, 1.0f, 0.0f,
-					0.0f, 0.0f, 0.0f, 1.0f };
-	_viewMatrix = glm::translate(_viewMatrix, glm::vec3(0.0f, 0.0f, -0.1f));
-	_shader.setMat4("view", _viewMatrix);
-
-	_modelMatrix =    { 1.0f, 0.0f, 0.0f, 0.0f,
-						0.0f, 1.0f, 0.0f, 0.0f,
-						0.0f, 0.0f, 1.0f, 0.0f,
-						0.0f, 0.0f, 0.0f, 1.0f };
-	_modelMatrix = glm::rotate(_modelMatrix, glm::radians(2.0f * 20.0f), glm::vec3(1.0f, 0.3f, 0.5f));
-	_shader.setMat4("model", _modelMatrix);
-
 	glBindVertexArray(_vaoID);
 	glDrawElements(GL_TRIANGLES, _vertexCount, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
 
+	_shader.stopUsing();
+}
+
+void Object::move(glm::vec3 pos) {
+	_modelMatrix = glm::translate(_modelMatrix, pos);
+	_shader.startUsing();
+	_shader.setMat4("model", _modelMatrix);
+	_shader.stopUsing();
+}
+
+void Object::rotate(float angle, glm::vec3 axis) {
+	_modelMatrix = glm::rotate(_modelMatrix, angle, axis);
+	_shader.startUsing();
+	_shader.setMat4("model", _modelMatrix);
 	_shader.stopUsing();
 }

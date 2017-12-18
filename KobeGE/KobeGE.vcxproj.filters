@@ -27,13 +27,16 @@
     <ClCompile Include="src\Input\InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\RenderManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Shaders\ShaderManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Object\Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Object\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,16 +53,10 @@
     <ClInclude Include="src\Input\InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\RenderManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Shaders\ShaderManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Object\Object.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Structs\ObjectStruct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Structs\VertexStruct.h">
@@ -71,9 +68,17 @@
     <ClInclude Include="res\externcode\imageloader\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Object\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\ObjectColor.frag" />
-    <None Include="res\shaders\ObjectColor.vert" />
+    <None Include="res\shaders\ObjectColorShader.vert" />
+    <None Include="res\shaders\ObjectColorShader.frag" />
+    <None Include="res\shaders\ObjectTextureShader.frag" />
+    <None Include="res\shaders\ObjectTextureShader.vert" />
   </ItemGroup>
 </Project>

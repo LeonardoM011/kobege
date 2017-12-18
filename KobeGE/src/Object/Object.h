@@ -7,7 +7,6 @@
 #include <GLM/glm.hpp>
 #include <GLM/gtc/matrix_transform.hpp>
 #include <GLM/gtc/type_ptr.hpp>
-#include "Structs/ObjectStruct.h"
 #include "Structs/VertexStruct.h"
 #include "ErrorChecking/PrintError.h"
 #include "Shaders/ShaderManager.h"
@@ -17,22 +16,23 @@ class Object {
 public:
 	Object();
 	~Object();
-	virtual void init(ObjectStruct objInfo, std::string textureFilePath, int windowWidth, int windowHeight);
+	void init(glm::vec2 pos, GLdouble width, GLdouble height, ShaderManager shader, int windowWidth, int windowHeight, std::string textureFilePath);
+	void init(glm::vec2 pos, GLdouble width, GLdouble height, ShaderManager shader, int windowWidth, int windowHeight, GLubyte r, GLubyte g, GLubyte b, GLubyte a);
 	void draw();
+	void move(glm::vec3 pos);
+	void rotate(float angle, glm::vec3 axis);
 private:
-	void upload(VertexStruct vertexData[], int sizeOfVertexData, GLuint indices[], int sizeOfIndices, std::string texturePath);
+	void upload(TexStruct vertexData[], int sizeOfVertexData, GLuint indices[], int sizeOfIndices, std::string texturePath);
+	void upload(ColorStruct vertexData[], int sizeOfVertexData, GLuint indices[], int sizeOfIndices);
+	void generate(GLuint &vboID, GLuint &vaoID, GLuint &eboID, GLuint &texID);
 	GLuint _vboID;
 	GLuint _vaoID;
 	GLuint _eboID;
 	GLuint _texID;
 	int _vertexCount;
-	static ShaderManager _shader;
-	static bool _isShaderSetup;
+	ShaderManager _shader;
 	int _windowWidth;
 	int _windowHeight;
-	glm::mat4 _viewMatrix;
 	glm::mat4 _modelMatrix;
-protected:
-	void generate(GLuint &vboID, GLuint &vaoID, GLuint &eboID, GLuint &texID);
 };
 

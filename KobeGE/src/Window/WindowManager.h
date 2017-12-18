@@ -14,11 +14,10 @@ public:
 	bool closeRequested();
 	void swap();
 	void pollEvents();
-	void processInput();
 	int getWidth() const { return _width; }
 	int getHeight() const { return _height; }
+	GLFWwindow* window;
 private:
-	GLFWwindow* _window;
 	int _width;
 	int _height;
 };

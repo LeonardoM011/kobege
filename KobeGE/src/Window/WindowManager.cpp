@@ -3,7 +3,7 @@
 #include "externcode/imageloader/stb_image.h"
 
 WindowManager::WindowManager() :
-	_window(nullptr),
+	window(nullptr),
 	_width(0),
 	_height(0)
 {
@@ -24,36 +24,32 @@ int WindowManager::create(int width, int height, const char *title) {
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
 	#endif
 
-	_window = glfwCreateWindow(width, height, title, NULL, NULL);
+	window = glfwCreateWindow(width, height, title, NULL, NULL);
 
 	int bpp;
 	GLFWimage icon;
 	icon.pixels = stbi_load("res/images/icon_default.png", &icon.height, &icon.width, &bpp, 4);
-	glfwSetWindowIcon(_window, 1, &icon);
+	glfwSetWindowIcon(window, 1, &icon);
 	stbi_image_free(icon.pixels);
 
-	GLFWwindowPos::glfwSetWindowCenter(_window);
-	if (!_window)
+	GLFWwindowPos::glfwSetWindowCenter(window);
+	if (!window)
 	{
 		glfwTerminate();
 		return -1;
 	}
-	glfwMakeContextCurrent(_window);
+	glfwMakeContextCurrent(window);
 	return 0;
 }
 
 bool WindowManager::closeRequested() {
-	return !glfwWindowShouldClose(_window);
+	return !glfwWindowShouldClose(window);
 }
 
 void WindowManager::swap() {
-	glfwSwapBuffers(_window);
+	glfwSwapBuffers(window);
 }
 
 void WindowManager::pollEvents() {
 	glfwPollEvents();
-}
-
-void WindowManager::processInput() {
-	InputManager::processInput(_window);
 }

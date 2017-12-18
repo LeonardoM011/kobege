@@ -1,6 +1,12 @@
 #include "InputManager.h"
+bool InputManager::keydown[350] = { false };
 
-void InputManager::processInput(GLFWwindow *window) {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
+void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+
+	if (action == GLFW_PRESS) {
+		keydown[key] = true;
+	}
+	if (action == GLFW_RELEASE) {
+		keydown[key] = false;
+	}
 }
