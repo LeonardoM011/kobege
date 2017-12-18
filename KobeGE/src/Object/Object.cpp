@@ -31,12 +31,14 @@ Object::~Object() {
 		glDeleteTextures(1, &_texID);
 }
 
-void Object::init(glm::vec2 pos, GLdouble width, GLdouble height, ShaderManager shader, int windowWidth, int windowHeight, std::string textureFilePath) {
+void Object::init(glm::vec2 pos, GLdouble width, GLdouble height, int windowWidth, int windowHeight, std::string textureFilePath) {
 	_windowHeight = windowHeight;
 	_windowWidth = windowWidth;
-	_shader = shader;
 	_width = width;
 	_height = height;
+
+	_shader.compileShaders("res/shaders/ObjectTextureShader.vert", "res/shaders/ObjectTextureShader.frag");
+	_shader.linkShaders();
 
 	generate(_vboID, _vaoID, _eboID, _texID);
 
@@ -79,12 +81,14 @@ void Object::init(glm::vec2 pos, GLdouble width, GLdouble height, ShaderManager 
 	_textureShader.stopUsing();*/
 }
 
-void Object::init(glm::vec2 pos, GLdouble width, GLdouble height, ShaderManager shader, int windowWidth, int windowHeight, GLubyte r, GLubyte g, GLubyte b, GLubyte a) {
+void Object::init(glm::vec2 pos, GLdouble width, GLdouble height, int windowWidth, int windowHeight, GLubyte r, GLubyte g, GLubyte b, GLubyte a) {
 	_windowHeight = windowHeight;
 	_windowWidth = windowWidth;
-	_shader = shader;
 	_width = width;
 	_height = height;
+
+	_shader.compileShaders("res/shaders/ObjectColorShader.vert", "res/shaders/ObjectColorShader.frag");
+	_shader.linkShaders();
 
 	generate(_vboID, _vaoID, _eboID, _texID);
 

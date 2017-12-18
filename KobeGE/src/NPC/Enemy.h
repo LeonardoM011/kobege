@@ -4,10 +4,10 @@
 #include "Input/InputManager.h"
 #include "GLFW/glfw3.h"
 
-class Player {
+class Enemy {
 public:
-	Player();
-	~Player();
+	Enemy();
+	~Enemy();
 	void init(glm::vec2 pos, GLdouble width, GLdouble height, int windowWidth, int windowHeight, GLubyte r, GLubyte g, GLubyte b, GLubyte a);
 	void draw();
 private:

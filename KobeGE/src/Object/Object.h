@@ -16,8 +16,8 @@ class Object {
 public:
 	Object();
 	~Object();
-	void init(glm::vec2 pos, GLdouble width, GLdouble height, ShaderManager shader, int windowWidth, int windowHeight, std::string textureFilePath);
-	void init(glm::vec2 pos, GLdouble width, GLdouble height, ShaderManager shader, int windowWidth, int windowHeight, GLubyte r, GLubyte g, GLubyte b, GLubyte a);
+	void init(glm::vec2 pos, GLdouble width, GLdouble height, int windowWidth, int windowHeight, std::string textureFilePath);
+	void init(glm::vec2 pos, GLdouble width, GLdouble height, int windowWidth, int windowHeight, GLubyte r, GLubyte g, GLubyte b, GLubyte a);
 	void draw();
 	void move(glm::vec3 pos);
 	void rotate(float angle, glm::vec3 axis);

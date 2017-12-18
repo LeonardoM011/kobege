@@ -9,7 +9,7 @@ uniform mat4 view;
 uniform mat4 model;
 
 void main() {
-	gl_Position = model * view * vec4(vertexPosition, 0.0, 1.0);
-	//gl_Position = model * view * vec4(0.0, 0.0, 0.0, 1.0);
+	//gl_Position = model * view * vec4(vertexPosition, 0.0, 1.0);
+	gl_Position = model * vec4(vertexPosition, 0.0, 1.0);
 	fragmentColor = vertexColor;
 }
