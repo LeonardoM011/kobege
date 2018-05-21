@@ -1,6 +1,8 @@
 # KobeGE
-# IMPORTANT:
-## Currently this project is innactive and i will continue working on it in the near future.
+##### IMPORTANT:
+##### Currently this project is innactive and i will continue working on it in the near future.
+
+-----------------------
 
 Kobe Game Engine Written in C++
 
