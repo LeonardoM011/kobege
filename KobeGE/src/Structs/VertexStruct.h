@@ -1,26 +1,18 @@
 #pragma once
 #include <GL/glew.h>
 
-struct TexStruct {
-	struct Position {
-		GLdouble x;
-		GLdouble y;
-	};
-	Position position;
+struct Vector2d {
+	GLdouble x;
+	GLdouble y;
+};
 
-	struct TexCoord {
-		GLdouble x;
-		GLdouble y;
-	};
-	TexCoord texCoord;
+struct TexStruct {
+	Vector2d position;
+	Vector2d texCoord;
 };
 
 struct ColorStruct {
-	struct Position {
-		GLdouble x;
-		GLdouble y;
-	};
-	Position position;
+	Vector2d position;
 
 	struct Color {
 		GLubyte r;
